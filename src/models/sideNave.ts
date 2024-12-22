@@ -1,11 +1,11 @@
-import { ReactElement, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 export interface ISideNav {
   title: string
-  icon: ReactElement
+  icon: ReactNode
   items: {
     title: string
-    icon: ReactElement
-    children: ReactNode
+    icon: ReactNode
+    link: string
   }[]
 }
