@@ -16,7 +16,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import EventIcon from '@mui/icons-material/Event'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { ISideNav } from '@/models/sideNave'
-import { ReactElement, ReactNode } from 'react'
+import { useRouter } from 'next/router'
 
 const sideNavs: ISideNav[] = [
   {
@@ -24,14 +24,9 @@ const sideNavs: ISideNav[] = [
     icon: <MenuBookIcon />,
     items: [
       {
-        title: '등록하기',
+        title: '강의',
         icon: <MenuBookIcon />,
-        children: <Typography>등록 페이지</Typography>,
-      },
-      {
-        title: '수정하기',
-        icon: <MenuBookIcon />,
-        children: <Typography>수정 페이지</Typography>,
+        link: '/cours',
       },
     ],
   },
@@ -42,12 +37,12 @@ const sideNavs: ISideNav[] = [
       {
         title: '목록 보기',
         icon: <SchoolIcon />,
-        children: <Typography>수강생 목록</Typography>,
+        link: '/cours',
       },
       {
         title: '추가하기',
         icon: <SchoolIcon />,
-        children: <Typography>수강생 추가</Typography>,
+        link: '/cours',
       },
     ],
   },
@@ -58,12 +53,12 @@ const sideNavs: ISideNav[] = [
       {
         title: '문제 보기',
         icon: <HelpOutlineIcon />,
-        children: <Typography>문제 보기</Typography>,
+        link: '/cours',
       },
       {
         title: '문제 등록',
         icon: <HelpOutlineIcon />,
-        children: <Typography>문제 등록</Typography>,
+        link: '/cours',
       },
     ],
   },
@@ -74,7 +69,7 @@ const sideNavs: ISideNav[] = [
       {
         title: '해설 목록',
         icon: <QuestionAnswerIcon />,
-        children: <Typography>해설 목록</Typography>,
+        link: '/cours',
       },
     ],
   },
@@ -85,7 +80,7 @@ const sideNavs: ISideNav[] = [
       {
         title: '질문 보기',
         icon: <QuestionAnswerIcon />,
-        children: <Typography>질문 보기</Typography>,
+        link: '/cours',
       },
     ],
   },
@@ -96,7 +91,7 @@ const sideNavs: ISideNav[] = [
       {
         title: '알림 관리',
         icon: <NotificationsIcon />,
-        children: <Typography>알림 관리</Typography>,
+        link: '/cours',
       },
     ],
   },
@@ -107,19 +102,16 @@ const sideNavs: ISideNav[] = [
       {
         title: '이벤트 등록',
         icon: <EventIcon />,
-        children: <Typography>이벤트 등록</Typography>,
+        link: '/cours',
       },
     ],
   },
 ]
 
-interface Props {
-  onChangeChildren: (children: ReactNode) => void
-}
-
-function SideNav({ onChangeChildren: onChangeChildren }: Props) {
-  const handleChangeView = (children: ReactNode) => {
-    onChangeChildren(children)
+function SideNav() {
+  const router = useRouter()
+  const handleChangeBody = (link: string) => {
+    router.push(link)
   }
   return (
     <Box
@@ -152,7 +144,7 @@ function SideNav({ onChangeChildren: onChangeChildren }: Props) {
             <List>
               {category.items.map((item, itemIndex) => (
                 <Button
-                  onClick={() => handleChangeView(item.children)}
+                  onClick={() => handleChangeBody(item.link)}
                   key={itemIndex}
                   fullWidth
                   sx={{

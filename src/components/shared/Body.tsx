@@ -1,24 +1,30 @@
 import { Box } from '@mui/material'
-import { ReactElement, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 interface Props {
-  children?: ReactNode
+  children: ReactNode
 }
+
 function Body({ children }: Props) {
-  if (children == null) {
-    return null
-  }
   return (
     <Box
       sx={{
         width: '100%',
-        background: 'aqua',
         height: '100vh',
         overflowY: 'auto',
-        padding: '16px 16px 240px 16px',
+        padding: '32px 32px 240px 32px',
       }}
     >
-      {children}
+      <Box
+        sx={{
+          minHeight: '912px',
+          padding: '32px',
+          borderRadius: '8px',
+          backgroundColor: (theme) => theme.palette.grey[50],
+        }}
+      >
+        {children}
+      </Box>
     </Box>
   )
 }
