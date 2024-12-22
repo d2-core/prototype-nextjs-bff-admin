@@ -1,7 +1,12 @@
 import { Box, Button, Typography } from '@mui/material'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 function TopNav() {
+  const route = useRouter()
+  const handleLoginClick = () => {
+    route.push('auth/login')
+  }
   return (
     <Box
       sx={{
@@ -30,7 +35,7 @@ function TopNav() {
         </Typography>
       </Link>
 
-      <Button variant="contained" color="primary">
+      <Button onClick={handleLoginClick} variant="contained" color="primary">
         로그인
       </Button>
     </Box>

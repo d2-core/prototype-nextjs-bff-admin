@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export interface ISideNav {
+export interface SideNav {
   title: string
   icon: ReactNode
   items: {

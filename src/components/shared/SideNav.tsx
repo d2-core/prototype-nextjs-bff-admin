@@ -15,7 +15,7 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import EventIcon from '@mui/icons-material/Event'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
-import { ISideNav } from '@/models/sideNave'
+import { SideNav as ISideNav } from '@/models/sideNave'
 import { useRouter } from 'next/router'
 
 const sideNavs: ISideNav[] = [
