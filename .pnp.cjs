@@ -33,6 +33,7 @@ const RAW_RUNTIME_STATE =
           ["@mui/material", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:6.2.1"],\
           ["@mui/styles", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:6.2.1"],\
           ["@types/node", "npm:22.9.1"],\
+          ["@types/qs", "npm:6.9.17"],\
           ["@types/react", "npm:18.3.12"],\
           ["@types/react-dom", "npm:18.3.1"],\
           ["axios", "npm:1.7.9"],\
@@ -1110,6 +1111,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../../.yarn/berry/cache/@types-prop-types-npm-15.7.14-4ccaa07795-10c0.zip/node_modules/@types/prop-types/",\
         "packageDependencies": [\
           ["@types/prop-types", "npm:15.7.14"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/qs", [\
+      ["npm:6.9.17", {\
+        "packageLocation": "../../../../.yarn/berry/cache/@types-qs-npm-6.9.17-f0eceee63c-10c0.zip/node_modules/@types/qs/",\
+        "packageDependencies": [\
+          ["@types/qs", "npm:6.9.17"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4208,6 +4218,7 @@ const RAW_RUNTIME_STATE =
           ["@mui/material", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:6.2.1"],\
           ["@mui/styles", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:6.2.1"],\
           ["@types/node", "npm:22.9.1"],\
+          ["@types/qs", "npm:6.9.17"],\
           ["@types/react", "npm:18.3.12"],\
           ["@types/react-dom", "npm:18.3.1"],\
           ["axios", "npm:1.7.9"],\
