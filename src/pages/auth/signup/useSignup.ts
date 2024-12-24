@@ -69,7 +69,7 @@ function useSignup() {
         authStorage.set(localstorageMap.AUTH.ACCESS_TOKEN, accessToken)
         authStorage.set(localstorageMap.AUTH.REFRESH_TOKEN, refreshToken)
         setUser(users)
-        rotue.push('/')
+        rotue.push('/workspace')
       } else {
         alert('로그인에 실패했습니다. 다시 시도해주세요.')
         rotue.push('/auth/login')

@@ -1,12 +1,43 @@
+import useUser from '@/hooks/auth/useUser'
 import { Box, Button, Typography } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { use, useCallback } from 'react'
 
 function TopNav() {
   const route = useRouter()
-  const handleLoginClick = () => {
-    route.push('auth/login')
-  }
+  const { user } = useUser()
+  const handleWorkspaceRoute = useCallback(() => {
+    route.push('/workspace')
+  }, [route])
+
+  const handleLoginPageRoute = useCallback(() => {
+    route.push('/auth/login')
+  }, [route])
+
+  const handleMyPageRoute = useCallback(() => {
+    route.push('/my')
+  }, [route])
+
+  const randerAuth = useCallback(() => {
+    if (!user) {
+      return (
+        <Button
+          onClick={handleLoginPageRoute}
+          variant="contained"
+          color="primary"
+        >
+          로그인
+        </Button>
+      )
+    } else {
+      return (
+        <Button onClick={handleMyPageRoute} variant="contained" color="primary">
+          마이페이지
+        </Button>
+      )
+    }
+  }, [user])
   return (
     <Box
       sx={{
@@ -20,24 +51,20 @@ function TopNav() {
         zIndex: 1000,
       }}
     >
-      <Link href="/">
-        <Typography
-          variant="h6"
-          sx={{
-            color: 'inherit',
-            cursor: 'pointer',
-            '&:hover': {
-              color: (theme) => theme.palette.primary.main,
-            },
-          }}
-        >
-          Creation
-        </Typography>
-      </Link>
-
-      <Button onClick={handleLoginClick} variant="contained" color="primary">
-        로그인
-      </Button>
+      <Typography
+        onClick={handleWorkspaceRoute}
+        variant="h6"
+        sx={{
+          color: 'inherit',
+          cursor: 'pointer',
+          '&:hover': {
+            color: (theme) => theme.palette.primary.main,
+          },
+        }}
+      >
+        Creation
+      </Typography>
+      {randerAuth()}
     </Box>
   )
 }

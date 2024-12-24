@@ -12,12 +12,12 @@ const courses: ICours[] = [
 function CoursList() {
   const router = useRouter()
   const handleDetail = (id: number) => {
-    router.push(`/cours/${id}`)
+    router.push(`/workspace/cours/${id}`)
   }
 
   const handleModify = (e: MouseEvent<HTMLButtonElement>, id: number) => {
     e.stopPropagation()
-    router.push(`/cours/edit/${id}`)
+    router.push(`/workspace/cours/edit/${id}`)
   }
 
   const handleDelete = (e: MouseEvent<HTMLButtonElement>, id: number) => {

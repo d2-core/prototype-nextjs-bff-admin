@@ -39,7 +39,7 @@ function useLogin() {
         authStorage.set(localstorageMap.AUTH.ACCESS_TOKEN, accessToken)
         authStorage.set(localstorageMap.AUTH.REFRESH_TOKEN, refreshToken)
         setUser(users)
-        route.push('/')
+        route.push('/workspace')
       } else {
         alert('로그인에 실패했습니다. 잠시후 다시 시도해주세요.')
       }

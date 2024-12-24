@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 function Cours() {
   const route = useRouter()
   const handleRegister = () => {
-    route.push('/cours/edit')
+    route.push('/workspace/cours/edit')
   }
   return (
     <Box>

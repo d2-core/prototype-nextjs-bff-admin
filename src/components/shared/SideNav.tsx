@@ -26,7 +26,7 @@ const sideNavs: ISideNav[] = [
       {
         title: '강의',
         icon: <MenuBookIcon />,
-        link: '/cours',
+        link: '/workspace/cours',
       },
     ],
   },
@@ -37,12 +37,12 @@ const sideNavs: ISideNav[] = [
       {
         title: '목록 보기',
         icon: <SchoolIcon />,
-        link: '/cours',
+        link: '/workspace/cours',
       },
       {
         title: '추가하기',
         icon: <SchoolIcon />,
-        link: '/cours',
+        link: '/workspace/cours',
       },
     ],
   },
@@ -53,12 +53,12 @@ const sideNavs: ISideNav[] = [
       {
         title: '문제 보기',
         icon: <HelpOutlineIcon />,
-        link: '/cours',
+        link: '/workspace/cours',
       },
       {
         title: '문제 등록',
         icon: <HelpOutlineIcon />,
-        link: '/cours',
+        link: '/workspace/cours',
       },
     ],
   },
@@ -69,7 +69,7 @@ const sideNavs: ISideNav[] = [
       {
         title: '해설 목록',
         icon: <QuestionAnswerIcon />,
-        link: '/cours',
+        link: '/workspace/cours',
       },
     ],
   },
@@ -80,7 +80,7 @@ const sideNavs: ISideNav[] = [
       {
         title: '질문 보기',
         icon: <QuestionAnswerIcon />,
-        link: '/cours',
+        link: '/workspace/cours',
       },
     ],
   },
@@ -91,7 +91,7 @@ const sideNavs: ISideNav[] = [
       {
         title: '알림 관리',
         icon: <NotificationsIcon />,
-        link: '/cours',
+        link: '/workspace/cours',
       },
     ],
   },
@@ -102,7 +102,7 @@ const sideNavs: ISideNav[] = [
       {
         title: '이벤트 등록',
         icon: <EventIcon />,
-        link: '/cours',
+        link: '/workspace/cours',
       },
     ],
   },
