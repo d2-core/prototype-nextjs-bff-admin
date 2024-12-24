@@ -4,6 +4,9 @@ import { AppProps } from 'next/app'
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query'
 import { RecoilRoot } from 'recoil'
 import Layout from '@/components/shared/Layout'
+import { AlertContextProvider } from '@/contexts/AlertContext'
+import ApiInit from '@/components/shared/ApiInit'
+import UserInit from '@/components/shared/UserInit'
 
 const client = new QueryClient({
   defaultOptions: {
@@ -24,7 +27,13 @@ function App({
       <RecoilRoot>
         <QueryClientProvider client={client}>
           <Hydrate state={dehydratedState}>
-            <Component {...pageProps} />
+            <AlertContextProvider>
+              <ApiInit>
+                <UserInit>
+                  <Component {...pageProps} />
+                </UserInit>
+              </ApiInit>
+            </AlertContextProvider>
           </Hydrate>
         </QueryClientProvider>
       </RecoilRoot>
