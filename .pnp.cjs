@@ -36,6 +36,7 @@ const RAW_RUNTIME_STATE =
           ["@types/qs", "npm:6.9.17"],\
           ["@types/react", "npm:18.3.12"],\
           ["@types/react-dom", "npm:18.3.1"],\
+          ["@types/validator", "npm:13.12.2"],\
           ["axios", "npm:1.7.9"],\
           ["date-fns", "npm:2.30.0"],\
           ["eslint", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:9.15.0"],\
@@ -50,7 +51,8 @@ const RAW_RUNTIME_STATE =
           ["react-hook-form", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:7.54.2"],\
           ["react-query", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:3.39.3"],\
           ["recoil", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:0.7.7"],\
-          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"],\
+          ["validator", "npm:13.12.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -1161,6 +1163,15 @@ const RAW_RUNTIME_STATE =
         ],\
         "packagePeers": [\
           "@types/react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/validator", [\
+      ["npm:13.12.2", {\
+        "packageLocation": "../../../../.yarn/berry/cache/@types-validator-npm-13.12.2-c7c4fd2a77-10c0.zip/node_modules/@types/validator/",\
+        "packageDependencies": [\
+          ["@types/validator", "npm:13.12.2"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4221,6 +4232,7 @@ const RAW_RUNTIME_STATE =
           ["@types/qs", "npm:6.9.17"],\
           ["@types/react", "npm:18.3.12"],\
           ["@types/react-dom", "npm:18.3.1"],\
+          ["@types/validator", "npm:13.12.2"],\
           ["axios", "npm:1.7.9"],\
           ["date-fns", "npm:2.30.0"],\
           ["eslint", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:9.15.0"],\
@@ -4235,7 +4247,8 @@ const RAW_RUNTIME_STATE =
           ["react-hook-form", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:7.54.2"],\
           ["react-query", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:3.39.3"],\
           ["recoil", "virtual:027f27212abfeaf24bd7f5fbdf4bbb6c0e768dbfebaf265a916de721709b708559d50d1eb6afb6db1b652f9772ea5acf83e041f47f5bfd053d9ccad3fd0a6b33#npm:0.7.7"],\
-          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"]\
+          ["typescript", "patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"],\
+          ["validator", "npm:13.12.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -5065,6 +5078,15 @@ const RAW_RUNTIME_STATE =
         "packagePeers": [\
           "@types/react",\
           "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["validator", [\
+      ["npm:13.12.0", {\
+        "packageLocation": "../../../../.yarn/berry/cache/validator-npm-13.12.0-6c8a423cbf-10c0.zip/node_modules/validator/",\
+        "packageDependencies": [\
+          ["validator", "npm:13.12.0"]\
         ],\
         "linkType": "HARD"\
       }]\
