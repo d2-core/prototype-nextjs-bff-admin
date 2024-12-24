@@ -1,3 +1,7 @@
+export const apiMap = {
+  OK: 'OK',
+}
+
 export const domainMap = {
   AUTH: '/auth-service',
 }
