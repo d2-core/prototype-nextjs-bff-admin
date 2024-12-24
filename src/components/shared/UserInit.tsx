@@ -1,29 +1,39 @@
 import { localstorageMap } from '@/constants/localstorage'
 import useUser from '@/hooks/auth/useUser'
 import { getUser } from '@/remote/api/auth'
-import { userAtom } from '@/store/atom/user'
 import { authStorage as authLocalStorage } from '@/store/local'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
-import { useSetRecoilState } from 'recoil'
 
 function UserInit({ children }: { children: React.ReactNode }) {
   const [accessToken, setAccessToken] = useState<string | null>(null)
-  const { user } = useUser()
-  const setUser = useSetRecoilState(userAtom)
+  const { user, setUser } = useUser()
+  const [init, setInit] = useState<boolean>(false)
 
-  const { data } = useQuery(['user'], getUser, {
+  const { data, isFetching } = useQuery(['user'], getUser, {
     enabled: Boolean(accessToken) && !Boolean(user),
+    onSuccess: (data) => {
+      if (data?.body) {
+        setUser(data.body)
+      }
+    },
+    onError: () => {
+      setInit(true)
+    },
   })
 
   useEffect(() => {
     const token = authLocalStorage.get(localstorageMap.AUTH.ACCESS_TOKEN)
-
     setAccessToken(token)
-    if (data?.body) {
-      setUser(data.body)
+
+    if (!token || (!isFetching && data)) {
+      setInit(true)
     }
-  }, [data, setUser])
+  }, [data, isFetching])
+
+  if (!init) {
+    return null
+  }
 
   return <>{children}</>
 }

@@ -7,6 +7,7 @@ import Layout from '@/components/shared/Layout'
 import { AlertContextProvider } from '@/contexts/AlertContext'
 import ApiInit from '@/components/shared/ApiInit'
 import UserInit from '@/components/shared/UserInit'
+import withAuthGuard from '@/components/shared/hocs/withAuthGuard'
 
 const client = new QueryClient({
   defaultOptions: {
@@ -19,8 +20,9 @@ const client = new QueryClient({
 
 function App({
   Component,
-  pageProps: { dehydratedState, session, ...pageProps },
+  pageProps: { dehydratedState, ...pageProps },
 }: AppProps) {
+  const AuthGaurdComponent = withAuthGuard(Component)
   return (
     <Layout>
       <Global styles={globalStyle} />
@@ -30,7 +32,7 @@ function App({
             <AlertContextProvider>
               <ApiInit>
                 <UserInit>
-                  <Component {...pageProps} />
+                  <AuthGaurdComponent {...pageProps} />
                 </UserInit>
               </ApiInit>
             </AlertContextProvider>
