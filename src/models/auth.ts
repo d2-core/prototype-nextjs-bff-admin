@@ -21,3 +21,7 @@ export interface IssuedToken {
   token?: string
   expiredAt?: string
 }
+
+export interface VerificationSmsCheck {
+  verificationSmsCheckId: number
+}
