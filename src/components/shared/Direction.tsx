@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { ReactNode } from 'react'
 
 interface Props {
@@ -16,10 +16,10 @@ function Direction({ title, actionChildren }: Props) {
         minHeight: '56px',
         paddingBottom: '16px',
         borderBottom: (theme) => `1px solid ${theme.palette.grey[300]}`,
-        marginBottom: '16px',
+        marginBottom: '64px',
       }}
     >
-      <Typography>{title}</Typography>
+      <Typography variant="h4">{title}</Typography>
       {actionChildren && actionChildren}
     </Box>
   )
