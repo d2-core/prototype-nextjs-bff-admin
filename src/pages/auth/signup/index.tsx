@@ -1,17 +1,8 @@
 import { adminUserRoleMap } from '@/models/form'
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  Link,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, Link, TextField, Typography } from '@mui/material'
 import validator from 'validator'
 import useSignup from './useSignup'
+import SelectMenu from '@/components/shared/SelectMenu'
 
 function SignupPage() {
   const {
@@ -49,19 +40,13 @@ function SignupPage() {
         <Typography variant="h5" align="center" sx={{ marginBottom: '32px' }}>
           회원가입
         </Typography>
-        <FormControl fullWidth sx={{ marginBottom: '32px' }}>
-          <InputLabel id="user-type-label">사용자 유형</InputLabel>
-          <Select
-            labelId="user-type-label"
-            label="사용자 유형"
-            defaultValue={defaultValues.adminUserRole}
-            {...register('adminUserRole')}
-          >
-            <MenuItem value={adminUserRoleMap.MANAGER}>관리자</MenuItem>
-            <MenuItem value={adminUserRoleMap.TEACHER}>선생님</MenuItem>
-            <MenuItem value={adminUserRoleMap.TEAM_MEMBER}>그 외</MenuItem>
-          </Select>
-        </FormControl>
+        <SelectMenu
+          title="사용자 유형"
+          memuMap={adminUserRoleMap}
+          dfValue={defaultValues.adminUserRole}
+          sx={{ marginBottom: '32px' }}
+          register={{ ...register('adminUserRole') }}
+        />
         <TextField
           label="닉네임"
           type="text"
