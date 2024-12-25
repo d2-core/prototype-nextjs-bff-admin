@@ -2,12 +2,14 @@ import { Box, Button } from '@mui/material'
 import Direction from '../shared/Direction'
 import CoursList from './CoursList'
 import { useRouter } from 'next/router'
+import { useCallback } from 'react'
 
 function Cours() {
   const route = useRouter()
-  const handleRegister = () => {
+  const handleRegister = useCallback(() => {
     route.push('/workspace/cours/edit')
-  }
+  }, [route])
+
   return (
     <Box>
       <Direction
