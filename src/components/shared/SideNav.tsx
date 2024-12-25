@@ -116,7 +116,7 @@ function SideNav() {
   return (
     <Box
       sx={{
-        minWidth: 300,
+        minWidth: '440px',
         height: '100vh',
         overflowY: 'auto',
         borderRight: (theme) => `1px solid ${theme.palette.grey[300]}`,
