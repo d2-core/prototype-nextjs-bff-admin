@@ -17,10 +17,13 @@ function Body({ children }: Props) {
     >
       <Box
         sx={{
+          maxWidth: '1200px',
           minHeight: '912px',
           padding: '32px',
+          margin: '0 auto',
           borderRadius: '8px',
-          backgroundColor: (theme) => theme.palette.grey[50],
+          backgroundColor: 'white',
+          border: (theme) => `1px solid ${theme.palette.grey[300]}`,
         }}
       >
         {children}
