@@ -16,7 +16,7 @@ function Direction({ title, actionChildren }: Props) {
         minHeight: '56px',
         paddingBottom: '16px',
         borderBottom: (theme) => `1px solid ${theme.palette.grey[300]}`,
-        marginBottom: '64px',
+        marginBottom: 4,
       }}
     >
       <Typography variant="h4">{title}</Typography>
