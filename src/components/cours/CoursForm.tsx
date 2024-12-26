@@ -6,6 +6,7 @@ import SelectMenu from '../shared/SelectMenu'
 import MultipleImageUpload from '../shared/MultipleImageUpload'
 import { isInt } from 'validator'
 import useCours from './hook/useCours'
+import MUIMarkdown from '../shared/MUIMarkdown'
 
 interface Props {
   id?: number
@@ -23,10 +24,9 @@ function CoursForm({ id }: Props) {
     hasSubmit,
     onAddTag,
     imagesUpload,
+    handleDescriptionAdd,
     handleSubmit,
   } = useCours(id)
-
-  console.log(watch())
   return (
     <Box>
       <Direction
@@ -93,24 +93,27 @@ function CoursForm({ id }: Props) {
           })}
         />
 
-        <TextField
-          label="설명"
-          type="text"
-          multiline
-          fullWidth
-          minRows={16}
-          maxRows={16}
-          sx={{ marginBottom: '32px' }}
-          error={!!errors.description}
-          helperText={errors.description?.message}
-          {...register('description', {
-            required: '설명을 입력해주세요',
-            minLength: {
-              value: 10,
-              message: '설명은 최소 5글자 이상이어야 합니다.',
-            },
-          })}
-        />
+        <Box
+          display={'flex'}
+          sx={{
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 1,
+          }}
+        >
+          <Typography>설명</Typography>
+          <Button onClick={handleDescriptionAdd}>등록하기</Button>
+        </Box>
+
+        <Box sx={{ marginBottom: 4 }}>
+          <MUIMarkdown
+            markdown={watch('description')}
+            sx={{ marginBottom: 1 }}
+          />
+          <Typography variant="caption" sx={{ color: 'red', marginLeft: 2 }}>
+            {!!errors.description && errors.description?.message}
+          </Typography>
+        </Box>
 
         <SelectMenu
           title="레벨"
