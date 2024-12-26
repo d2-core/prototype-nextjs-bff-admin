@@ -8,6 +8,7 @@ import { AlertContextProvider } from '@/contexts/AlertContext'
 import ApiInit from '@/components/shared/ApiInit'
 import UserInit from '@/components/shared/UserInit'
 import withAuthGuard from '@/components/shared/hocs/withAuthGuard'
+import { MarkdownPreviewContextProvider } from '@/contexts/MarkdownPreviewContext'
 
 const client = new QueryClient({
   defaultOptions: {
@@ -30,11 +31,13 @@ function App({
         <QueryClientProvider client={client}>
           <Hydrate state={dehydratedState}>
             <AlertContextProvider>
-              <ApiInit>
-                <UserInit>
-                  <AuthGaurdComponent {...pageProps} />
-                </UserInit>
-              </ApiInit>
+              <MarkdownPreviewContextProvider>
+                <ApiInit>
+                  <UserInit>
+                    <AuthGaurdComponent {...pageProps} />
+                  </UserInit>
+                </ApiInit>
+              </MarkdownPreviewContextProvider>
             </AlertContextProvider>
           </Hydrate>
         </QueryClientProvider>
