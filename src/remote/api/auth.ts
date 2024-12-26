@@ -1,5 +1,5 @@
 import { Api } from '@/models/api'
-import { IssuedToken, Token, User, VerificationSmsCheck } from '@/models/auth'
+import { Token, User, VerificationSmsCheck } from '@/models/auth'
 import { getApi } from './axios'
 import { headerMap } from '@/constants/auth'
 import { SignupForm } from '@/models/form'
@@ -8,7 +8,7 @@ export async function refresh({
   refreshToken,
 }: {
   refreshToken: string
-}): Promise<Api<IssuedToken>> {
+}): Promise<Api<Token>> {
   const response = await getApi('AUTH').post(
     'api/auth/v1/tokens/refresh',
     null,

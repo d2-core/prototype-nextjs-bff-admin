@@ -17,11 +17,6 @@ export interface Token {
   refreshTokenExpiredAt?: string
 }
 
-export interface IssuedToken {
-  token?: string
-  expiredAt?: string
-}
-
 export interface VerificationSmsCheck {
   verificationSmsCheckId: number
 }

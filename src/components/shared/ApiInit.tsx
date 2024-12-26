@@ -28,7 +28,7 @@ function ApiInit({ children }: { children: React.ReactNode }) {
 
     setUser(null)
 
-    router.push('/auth/signin')
+    router.push('/auth/login')
   }
 
   const handleUnauthorized = async () => {
@@ -44,7 +44,7 @@ function ApiInit({ children }: { children: React.ReactNode }) {
     }
 
     const { result, body } = await refresh({ refreshToken })
-    const accessToken = body.token
+    const accessToken = body.accessToken
     if (!accessToken) {
       handleLogout()
 
@@ -102,7 +102,10 @@ function ApiInit({ children }: { children: React.ReactNode }) {
           if (status === HttpStatusCode.Forbidden) {
             open({
               title: '접근 권한이 없습니다.',
-              onButtonClick: () => {
+              description:
+                '해당 페이지를 볼 권한이 없습니다. 이전 페이지로 돌아가거나 관리자에게 문의하세요.',
+              primaryButtonLabel: '이전으로',
+              onPrimaryButtonClick: () => {
                 router.back()
               },
             })
