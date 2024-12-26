@@ -59,6 +59,7 @@ function ImageUpload({ upload, sx, ...rest }: Props) {
         const previewURL = URL.createObjectURL(file)
         append({ file, previewURL })
       })
+      upload(currentImages.map((image) => image.file))
     },
     [append],
   )
