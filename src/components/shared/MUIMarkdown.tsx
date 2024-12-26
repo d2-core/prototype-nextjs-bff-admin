@@ -1,5 +1,5 @@
 import ReactMarkdown from 'react-markdown'
-import { Box, Typography, TextField } from '@mui/material'
+import { Box, Typography, TextField, BoxProps } from '@mui/material'
 import rehypeHighlight from 'rehype-highlight'
 import 'highlight.js/styles/github.css'
 import remarkGfm from 'remark-gfm'
@@ -327,32 +327,33 @@ public class HelloWorld {
 ---
 
 Thank you for exploring! 🎉
+
 `
 
-function MUIMarkdown() {
-  const [description, setDescripion] = useState('')
+interface Props extends BoxProps {
+  markdown: string
+}
 
+function MUIMarkdown({ markdown, sx, ...rest }: Props) {
   return (
-    <Box
-      sx={{
-        padding: 4,
-        backgroundColor: '#f5f5f5',
-        borderRadius: 2,
-        margin: '0 auto',
-      }}
-    >
-      <TextField
-        fullWidth
-        multiline
-        onChange={(e) => setDescripion(e.target.value)}
-      />
-      <ReactMarkdown
-        components={markdownComponents}
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeHighlight, rehypeRaw]}
+    <Box sx={sx} {...rest}>
+      <Box
+        sx={{
+          padding: 4,
+          backgroundColor: '#f5f5f5',
+          borderRadius: 2,
+          margin: '0 auto',
+          height: '100%',
+        }}
       >
-        {description}
-      </ReactMarkdown>
+        <ReactMarkdown
+          components={markdownComponents}
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeHighlight, rehypeRaw]}
+        >
+          {markdown}
+        </ReactMarkdown>
+      </Box>
     </Box>
   )
 }
