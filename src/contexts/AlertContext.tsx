@@ -8,7 +8,6 @@ import {
 } from 'react'
 
 import { createPortal } from 'react-dom'
-
 import Alert from '@shared/Alert'
 
 type AlertProps = ComponentProps<typeof Alert>
@@ -22,9 +21,12 @@ const Context = createContext<AlertContextValue | undefined>(undefined)
 
 const defaultValues: AlertProps = {
   open: false,
-  title: null,
+  title: '',
   description: null,
-  onButtonClick: () => {},
+  primaryButtonLabel: '확인',
+  secondaryButtonLabel: '취소',
+  onPrimaryButtonClick: () => {},
+  onSecondaryButtonClick: () => {},
 }
 
 export function AlertContextProvider({
@@ -44,12 +46,20 @@ export function AlertContextProvider({
   }, [])
 
   const open = useCallback(
-    ({ onButtonClick, ...options }: AlertOptions) => {
+    ({
+      onPrimaryButtonClick,
+      onSecondaryButtonClick,
+      ...options
+    }: AlertOptions) => {
       setAlertState({
         ...options,
-        onButtonClick: () => {
+        onPrimaryButtonClick: () => {
           close()
-          onButtonClick()
+          if (onPrimaryButtonClick) onPrimaryButtonClick()
+        },
+        onSecondaryButtonClick: () => {
+          close()
+          if (onSecondaryButtonClick) onSecondaryButtonClick()
         },
         open: true,
       })
@@ -62,7 +72,7 @@ export function AlertContextProvider({
   return (
     <Context.Provider value={values}>
       {children}
-      {$portal_root != null
+      {alertState.open && $portal_root != null
         ? createPortal(<Alert {...alertState} />, $portal_root)
         : null}
     </Context.Provider>
