@@ -9,7 +9,7 @@ import ApiInit from '@/components/shared/ApiInit'
 import UserInit from '@/components/shared/UserInit'
 import withAuthGuard from '@/components/shared/hocs/withAuthGuard'
 import { MarkdownPreviewContextProvider } from '@/contexts/MarkdownPreviewContext'
-import StaticsInit from '@/contexts/StaticsInit'
+import { StaticsContextProvider } from '@/contexts/StaticsContext'
 
 const client = new QueryClient({
   defaultOptions: {
@@ -34,11 +34,11 @@ function App({
             <AlertContextProvider>
               <MarkdownPreviewContextProvider>
                 <ApiInit>
-                  <StaticsInit>
+                  <StaticsContextProvider>
                     <UserInit>
                       <AuthGaurdComponent {...pageProps} />
                     </UserInit>
-                  </StaticsInit>
+                  </StaticsContextProvider>
                 </ApiInit>
               </MarkdownPreviewContextProvider>
             </AlertContextProvider>

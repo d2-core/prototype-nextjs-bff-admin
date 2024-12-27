@@ -11,3 +11,10 @@ export interface CourseLevel {
   description?: string
   order: number
 }
+
+export interface CourseRecommendTag {
+  id: number
+  name?: string
+  description?: string
+  order: number
+}
