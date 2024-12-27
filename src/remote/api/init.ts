@@ -1,3 +1,0 @@
-// UserType
-// CoureLevel
-// CoursCategory

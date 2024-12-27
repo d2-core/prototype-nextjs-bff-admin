@@ -4,6 +4,7 @@ export const apiMap = {
 
 export const domainMap = {
   AUTH: '/auth-service',
+  PRODUCT: '/product-service',
 }
 
 export type Domain = keyof typeof domainMap
