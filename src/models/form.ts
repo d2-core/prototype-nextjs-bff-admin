@@ -39,11 +39,11 @@ export type CoursCategory = keyof typeof coursCategoryMap
 
 export interface CoursForm {
   thumbnailImageFiles: File[]
-  category?: CoursCategory
+  courseCategoryId: number
   title: string
   subTitle: string
-  description: string
-  level?: CoursLebvel
+  descriptionWithMarkdown: string
+  courseLevelId: number
   tags: string[]
   price: number
 }

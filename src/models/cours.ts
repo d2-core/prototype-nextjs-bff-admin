@@ -5,17 +5,15 @@ export interface Cours {
   thumbnailImageUrls: string[]
   category?: CoursCategory
   title?: string
-  description?: string
+  descriptionWithMarkdown?: string
   level?: CoursLebvel
   tags: string[]
   price?: number
-  duration?: number
   author?: string
   rating?: number
-  enrolledCount?: number
   createdAt?: string
   updatedAt?: string
-  isPublish?: boolean
+  publishState?: 'PUBLISH' | 'UN_PUBLISH'
   publishedAt?: string
   courseStatistics?: CourseDetailStatistics
 }

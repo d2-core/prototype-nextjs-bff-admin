@@ -10,19 +10,19 @@ import { UseFormRegisterReturn } from 'react-hook-form'
 
 interface Props extends BoxProps {
   title: string
-  memuMap: Record<string, string>
+  memuArr: { id: number; name: string }[]
   dfValue?: string
   register: UseFormRegisterReturn
 }
-function SelectMenu({ title, memuMap, dfValue, register, sx, ...rest }: Props) {
+function SelectMenu({ title, memuArr, dfValue, register, sx, ...rest }: Props) {
   return (
     <Box sx={sx} {...rest}>
       <FormControl fullWidth>
         <InputLabel id={title}>{title}</InputLabel>
         <Select labelId={title} id={title} defaultValue={dfValue} {...register}>
-          {Object.entries(memuMap).map(([key, value]) => (
-            <MenuItem key={key} value={key}>
-              {value}
+          {memuArr.map((menu) => (
+            <MenuItem key={menu.id} value={menu.id}>
+              {menu.name}
             </MenuItem>
           ))}
         </Select>

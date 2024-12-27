@@ -1,20 +1,24 @@
 import { useMarkdownPreviewContext } from '@/contexts/MarkdownPreviewContext'
 import { CoursForm } from '@/models/form'
+import { createCourse } from '@/remote/api/course'
+import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import { useMutation } from 'react-query'
 
 const defaultValues: CoursForm = {
   thumbnailImageFiles: [],
-  category: undefined,
+  courseCategoryId: 0,
   title: '',
-  description: '### Hello 👋',
-  level: undefined,
+  descriptionWithMarkdown: '### Hello 👋',
+  courseLevelId: 0,
   tags: [],
   price: 0,
   subTitle: '',
 }
 
 function useCours(id?: number) {
+  const route = useRouter()
   const { open } = useMarkdownPreviewContext()
   const {
     register,
@@ -26,6 +30,16 @@ function useCours(id?: number) {
   } = useForm<CoursForm>({
     defaultValues: defaultValues,
     mode: 'onChange',
+  })
+
+  const createCourseMutation = useMutation(createCourse, {
+    onSuccess: (data) => {
+      alert('인증 코드가 전송되었습니다.')
+    },
+    onError: (error: any) => {
+      console.log(error)
+      alert('인증 코드 생성에 실패했습니다. 다시 시도해주세요.')
+    },
   })
 
   const imagesUpload = (images: File[]) => {
@@ -44,25 +58,25 @@ function useCours(id?: number) {
   }
 
   const handleSubmit = (formValues: CoursForm) => {
-    // api
-    console.log('Form Submitted!', formValues)
+    createCourseMutation.mutate(formValues)
+    route.push('/workspace/cours')
   }
 
   const handleDescriptionAdd = useCallback(() => {
     open({
-      markdown: watch('description'),
+      markdown: watch('descriptionWithMarkdown'),
       onApply: (markdown: string) => {
-        setValue('description', markdown)
-        if (watch('description').length > 10) {
-          clearErrors('description')
+        setValue('descriptionWithMarkdown', markdown)
+        if (watch('descriptionWithMarkdown').length > 10) {
+          clearErrors('descriptionWithMarkdown')
         } else {
-          setError('description', {
+          setError('descriptionWithMarkdown', {
             message: '설명은 최소 10글자 이상 등록해주세요.',
           })
         }
       },
     })
-  }, [watch('description')])
+  }, [watch('descriptionWithMarkdown')])
 
   const hasSubmit = Object.keys(errors).length === 0
 

@@ -1,5 +1,4 @@
 import { Box, Button, css, TextField, Typography } from '@mui/material'
-import { coursCategoryMap, coursLevelMap } from '@/models/form'
 import Direction from '../shared/Direction'
 import AddTag from '../shared/AddTag'
 import SelectMenu from '../shared/SelectMenu'
@@ -7,6 +6,7 @@ import MultipleImageUpload from '../shared/MultipleImageUpload'
 import { isInt } from 'validator'
 import useCours from './hook/useCours'
 import MUIMarkdown from '../shared/MUIMarkdown'
+import { useStaticsContext } from '@/contexts/StaticsContext'
 
 interface Props {
   id?: number
@@ -16,6 +16,9 @@ const suggestions = ['React', 'JavaScript', 'TypeScript', 'Node.js', 'CSS']
 function CoursForm({ id }: Props) {
   const titleTail = id == null ? 'Register' : 'Modify'
   const actionButtonTitle = id == null ? '저장하기' : '수정하기'
+  const { courseCategories, courseLevels, coursRecommedTags } =
+    useStaticsContext()
+
   const {
     defaultValues,
     register,
@@ -27,6 +30,9 @@ function CoursForm({ id }: Props) {
     handleDescriptionAdd,
     handleSubmit,
   } = useCours(id)
+
+  console.log(watch())
+
   return (
     <Box>
       <Direction
@@ -53,11 +59,13 @@ function CoursForm({ id }: Props) {
         )}
         <SelectMenu
           title="카테고리"
-          memuMap={coursCategoryMap}
-          dfValue={defaultValues.category}
+          memuArr={courseCategories.map((item) => ({
+            id: item.id,
+            name: item.name ?? '',
+          }))}
           sx={{ margin: '32px 0' }}
           register={{
-            ...register('category'),
+            ...register('courseCategoryId'),
           }}
         />
 
@@ -107,25 +115,31 @@ function CoursForm({ id }: Props) {
 
         <Box sx={{ marginBottom: 4 }}>
           <MUIMarkdown
-            markdown={watch('description')}
+            markdown={watch('descriptionWithMarkdown')}
             sx={{ marginBottom: 1 }}
           />
           <Typography variant="caption" sx={{ color: 'red', marginLeft: 2 }}>
-            {!!errors.description && errors.description?.message}
+            {!!errors.descriptionWithMarkdown &&
+              errors.descriptionWithMarkdown?.message}
           </Typography>
         </Box>
 
         <SelectMenu
           title="레벨"
-          memuMap={coursLevelMap}
-          dfValue={defaultValues.level}
+          memuArr={courseLevels.map((item) => ({
+            id: item.id,
+            name: item.name ?? '',
+          }))}
           sx={{ marginBottom: '32px' }}
           register={{
-            ...register('level'),
+            ...register('courseLevelId'),
           }}
         />
 
-        <AddTag suggestions={suggestions} onAddTag={onAddTag} />
+        <AddTag
+          suggestions={coursRecommedTags.map((tag) => tag?.name ?? '')}
+          onAddTag={onAddTag}
+        />
 
         <TextField
           label="가격"
