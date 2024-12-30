@@ -5,6 +5,8 @@ import CoursAction from './CoursAction'
 import { Cours } from '@/models/cours'
 import CoursFilter from './CoursFilter'
 import ListEmpty from '../shared/ListEmpty'
+import { useQuery } from 'react-query'
+import { getCourseList } from '@/remote/api/course'
 
 const initialCourses: Cours[] = [
   {
@@ -14,14 +16,13 @@ const initialCourses: Cours[] = [
     ],
     category: 'program',
     title: 'React와 TypeScript로 배우는 웹 개발',
-    description: 'React와 TypeScript를 활용한 모던 웹 개발 강좌입니다.',
+    descriptionWithMarkdown:
+      'React와 TypeScript를 활용한 모던 웹 개발 강좌입니다.',
     level: 'advanced',
     tags: ['React', 'TypeScript', '프론트엔드'],
     price: 30000,
-    duration: 12,
     author: '홍길동',
     rating: 4.8,
-    enrolledCount: 1234,
     createdAt: '2023-01-01T00:00:00Z',
     updatedAt: '2023-05-01T00:00:00Z',
     publishedAt: undefined,
@@ -33,14 +34,12 @@ const initialCourses: Cours[] = [
     ],
     category: 'design',
     title: 'UI/UX 디자인의 모든 것',
-    description: '디자인 초보자를 위한 실습 중심 강좌입니다.',
+    descriptionWithMarkdown: '디자인 초보자를 위한 실습 중심 강좌입니다.',
     level: 'beginner',
     tags: ['디자인', 'UI', 'UX'],
     price: 20000,
-    duration: 8,
     author: '김디자이너',
     rating: 4.5,
-    enrolledCount: 564,
     createdAt: '2023-02-01T00:00:00Z',
     updatedAt: '2023-05-10T00:00:00Z',
     publishedAt: '2023-05-15T00:00:00Z',
@@ -50,6 +49,10 @@ const initialCourses: Cours[] = [
 function CoursList() {
   const router = useRouter()
   const [courses] = useState(initialCourses)
+
+  const { data } = useQuery(['course-list'], getCourseList)
+
+  console.log(data)
 
   const handleDetail = (id: number) => {
     router.push(`/workspace/cours/${id}`)
@@ -111,8 +114,7 @@ function CoursList() {
                     {item.price ? `${item.price.toLocaleString()}원` : '무료'}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    등록자: {item.enrolledCount}명 | 강의 시간: {item.duration}
-                    시간
+                    등록자: 3명 | 강의 시간: 3 시간
                   </Typography>
                 </Box>
               </Stack>

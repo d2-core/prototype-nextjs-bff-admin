@@ -1,24 +1,18 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Box,
   Button,
-  css,
   debounce,
   Stack,
   SxProps,
   TextField,
   Theme,
-  Typography,
 } from '@mui/material'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useCallback, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import MultiSelectMenu from '../shared/MultiSelectMenu'
-import { coursCategoryMap, coursLevelMap } from '@/models/form'
 import RangeTextFiled from '../shared/RangeTextFiled'
 import FilterBody from '../shared/FilterBody'
+import { useStaticsContext } from '@/contexts/StaticsContext'
 
 interface Props {
   onFilter: (filter: CoursFilter) => void
@@ -46,6 +40,7 @@ function CoursFilter({ onFilter }: Props) {
     mode: 'onChange',
   })
 
+  const { courseCategories, courseLevels } = useStaticsContext()
   const { control, watch, register } = formMethod
 
   const debouncedFilter = useCallback(
@@ -77,7 +72,13 @@ function CoursFilter({ onFilter }: Props) {
           {/* Category Filter */}
           <MultiSelectMenu
             title="카테고리"
-            memuMap={coursCategoryMap}
+            memuMap={courseCategories.reduce<Record<number, string>>(
+              (record, category) => {
+                record[category.id] = category.name ?? ''
+                return record
+              },
+              {},
+            )}
             formMethod={formMethod}
             sx={{ width: '100%' }}
           />
@@ -85,7 +86,13 @@ function CoursFilter({ onFilter }: Props) {
           {/* Level Filter */}
           <MultiSelectMenu
             title="레벨"
-            memuMap={coursLevelMap}
+            memuMap={courseLevels.reduce<Record<number, string>>(
+              (record, category) => {
+                record[category.id] = category.name ?? ''
+                return record
+              },
+              {},
+            )}
             formMethod={formMethod}
             sx={{ width: '100%' }}
           />
