@@ -10,7 +10,7 @@ import { UseFormRegisterReturn } from 'react-hook-form'
 
 interface Props extends BoxProps {
   title: string
-  memuArr: { id: number; name: string }[]
+  memuArr: { id: string; name: string }[]
   dfValue?: string
   register: UseFormRegisterReturn
 }

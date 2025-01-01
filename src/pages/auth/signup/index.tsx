@@ -1,8 +1,8 @@
-import { adminUserRoleMap } from '@/models/form'
 import { Box, Button, Link, TextField, Typography } from '@mui/material'
 import validator from 'validator'
 import useSignup from './useSignup'
 import SelectMenu from '@/components/shared/SelectMenu'
+import { adminUserRoleMap } from '@/models/form'
 
 function SignupPage() {
   const {
@@ -42,8 +42,10 @@ function SignupPage() {
         </Typography>
         <SelectMenu
           title="사용자 유형"
-          memuMap={adminUserRoleMap}
-          dfValue={defaultValues.adminUserRole}
+          memuArr={Object.entries(adminUserRoleMap).map(([key, value]) => ({
+            id: key,
+            name: value as string,
+          }))}
           sx={{ marginBottom: '32px' }}
           register={{ ...register('adminUserRole') }}
         />
