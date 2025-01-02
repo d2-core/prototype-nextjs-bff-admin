@@ -4,18 +4,19 @@ import { useEffect, useState } from 'react'
 
 interface Props extends BoxProps {
   suggestions: Array<string>
+  value: Array<string>
   onAddTag: (tags: Array<string>) => void
 }
 
-function AddTag({ suggestions, onAddTag, sx, ...rest }: Props) {
+function AddTag({ suggestions, value, onAddTag, sx, ...rest }: Props) {
   const [tags, setTags] = useState<string[]>([])
   const handleChange = (event: any, newValue: string[]) => {
-    setTags(newValue)
+    onAddTag(newValue)
   }
 
   useEffect(() => {
-    onAddTag(tags)
-  }, [tags])
+    setTags(value.filter((item) => item !== ''))
+  }, [value])
 
   return (
     <Box sx={sx} {...rest}>
