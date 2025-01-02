@@ -1,21 +1,31 @@
 import { CoursCategory, CoursLebvel } from './form'
 
+export type CoursePublishState = 'PUBLISH' | 'UN_PUBLISH'
+
 export interface Cours {
   id: number
   thumbnailImageUrls: string[]
-  category?: CoursCategory
+  courseCategoryId?: number
   title?: string
+  subTitle?: string
   descriptionWithMarkdown?: string
-  level?: CoursLebvel
+  courseLevelId?: number
   tags: string[]
+  publishState?: CoursePublishState
+
   price?: number
-  author?: string
-  rating?: number
+  studentCount?: number
+  duration?: number
+
   createdAt?: string
   updatedAt?: string
-  publishState?: 'PUBLISH' | 'UN_PUBLISH'
   publishedAt?: string
-  courseStatistics?: CourseDetailStatistics
+}
+
+export interface CourseTeacher {
+  id: number
+  courseId?: number
+  name?: string
 }
 
 export interface CourseDetailStatistics {
