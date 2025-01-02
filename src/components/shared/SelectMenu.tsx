@@ -5,21 +5,37 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
 } from '@mui/material'
 import { UseFormRegisterReturn } from 'react-hook-form'
 
 interface Props extends BoxProps {
-  title: string
+  title?: string
   memuArr: { id: string; name: string }[]
-  dfValue?: string
-  register: UseFormRegisterReturn
+  value?: string
+  register?: UseFormRegisterReturn
+  onSelectChange?: (e: SelectChangeEvent<string>, id: string) => void
 }
-function SelectMenu({ title, memuArr, dfValue, register, sx, ...rest }: Props) {
+function SelectMenu({
+  title,
+  memuArr,
+  register,
+  value,
+  onSelectChange,
+  sx,
+  ...rest
+}: Props) {
   return (
     <Box sx={sx} {...rest}>
       <FormControl fullWidth>
-        <InputLabel id={title}>{title}</InputLabel>
-        <Select labelId={title} id={title} defaultValue={dfValue} {...register}>
+        {title && <InputLabel id={title}>{title}</InputLabel>}
+        <Select
+          labelId={title}
+          id={title}
+          value={value}
+          onChange={(e) => onSelectChange && onSelectChange(e, e.target.value)}
+          {...register}
+        >
           {memuArr.map((menu) => (
             <MenuItem key={menu.id} value={menu.id}>
               {menu.name}
