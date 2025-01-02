@@ -1,58 +1,19 @@
 import { Box, List, ListItem, Typography, Stack } from '@mui/material'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import CoursAction from './CoursAction'
-import { Cours } from '@/models/cours'
 import CoursFilter from './CoursFilter'
 import ListEmpty from '../shared/ListEmpty'
 import { useQuery } from 'react-query'
 import { getCourseList } from '@/remote/api/course'
-
-const initialCourses: Cours[] = [
-  {
-    id: 1,
-    thumbnailImageUrls: [
-      'https://www.investopedia.com/thmb/ckPwC5ARwco1nOSCKVGE57se8MI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1245748917-99e3329a7b8147e8ab648806220ce153.jpg',
-    ],
-    category: 'program',
-    title: 'React와 TypeScript로 배우는 웹 개발',
-    descriptionWithMarkdown:
-      'React와 TypeScript를 활용한 모던 웹 개발 강좌입니다.',
-    level: 'advanced',
-    tags: ['React', 'TypeScript', '프론트엔드'],
-    price: 30000,
-    author: '홍길동',
-    rating: 4.8,
-    createdAt: '2023-01-01T00:00:00Z',
-    updatedAt: '2023-05-01T00:00:00Z',
-    publishedAt: undefined,
-  },
-  {
-    id: 2,
-    thumbnailImageUrls: [
-      'https://www.investopedia.com/thmb/ckPwC5ARwco1nOSCKVGE57se8MI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1245748917-99e3329a7b8147e8ab648806220ce153.jpg',
-    ],
-    category: 'design',
-    title: 'UI/UX 디자인의 모든 것',
-    descriptionWithMarkdown: '디자인 초보자를 위한 실습 중심 강좌입니다.',
-    level: 'beginner',
-    tags: ['디자인', 'UI', 'UX'],
-    price: 20000,
-    author: '김디자이너',
-    rating: 4.5,
-    createdAt: '2023-02-01T00:00:00Z',
-    updatedAt: '2023-05-10T00:00:00Z',
-    publishedAt: '2023-05-15T00:00:00Z',
-  },
-]
+import { useStaticsContext } from '@/contexts/StaticsContext'
 
 function CoursList() {
+  const { getCourseCategory, getCourseLevel } = useStaticsContext()
   const router = useRouter()
-  const [courses] = useState(initialCourses)
-
   const { data } = useQuery(['course-list'], getCourseList)
+  const courses = data?.body ?? []
 
-  console.log(data)
+  console.log(courses)
 
   const handleDetail = (id: number) => {
     router.push(`/workspace/cours/${id}`)
@@ -110,11 +71,14 @@ function CoursList() {
                 <Box>
                   <Typography variant="h6">{item.title}</Typography>
                   <Typography variant="body2" color="textSecondary">
-                    {item.category} | {item.level} |{' '}
+                    {getCourseCategory(item?.courseCategoryId ?? 0)?.name} |{' '}
+                    {getCourseLevel(item?.courseLevelId ?? 0)?.name} |{' '}
                     {item.price ? `${item.price.toLocaleString()}원` : '무료'}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    등록자: 3명 | 강의 시간: 3 시간
+                    등록자: {item?.studentCount ?? 0}명 | 강의 시간:{' '}
+                    {item?.duration ?? 0}
+                    시간
                   </Typography>
                 </Box>
               </Stack>

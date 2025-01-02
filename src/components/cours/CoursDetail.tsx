@@ -8,7 +8,6 @@ import {
   Rating,
 } from '@mui/material'
 import { useRouter } from 'next/router'
-import { Cours } from '@/models/cours'
 import Direction from '../shared/Direction'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
@@ -17,51 +16,36 @@ import LectureList from '../lecture/LectureList'
 import CoursAction from './CoursAction'
 import { useMemo, useRef } from 'react'
 import ScrollIntoButtonGroup from '../shared/ScrollIntoButtonGroup'
+import { useQueries } from 'react-query'
+import { getCourse, getCourseTeacher } from '@/remote/api/course'
 
-// 예제 데이터 (실제 데이터는 API를 통해 받아올 수 있음)
-const exampleCours: Cours = {
-  id: 1,
-  thumbnailImageUrls: [
-    'https://www.investopedia.com/thmb/ckPwC5ARwco1nOSCKVGE57se8MI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1245748917-99e3329a7b8147e8ab648806220ce153.jpg',
-  ],
-  category: 'program',
-  title: 'React와 TypeScript로 배우는 웹 개발',
-  descriptionWithMarkdown:
-    'React와 TypeScript를 활용한 모던 웹 개발 강좌입니다.',
-  level: 'advanced',
-  tags: ['React', 'TypeScript', '프론트엔드'],
-  price: 30000,
-  author: '홍길동',
-  rating: 4.8,
-  createdAt: '2023-01-01T00:00:00Z',
-  updatedAt: '2023-05-01T00:00:00Z',
-  publishedAt: '2023-03-01T00:00:00Z',
-  courseStatistics: {
-    studentStatistics: {
-      totalStudents: 500,
-      activeStudents: 450,
-      completedStudents: 300,
-    },
-    lectureStatistics: {
-      totalLectures: 10,
-      totalDuration: 600,
-      averageDuration: 60,
-    },
-  },
+interface Props {
+  id: number
 }
 
-function CourseDetailPage() {
+function CourseDetailPage({ id }: Props) {
   const router = useRouter()
   const courseStatisticsRef = useRef<HTMLDivElement>(null)
   const lectureStatisticsRef = useRef<HTMLDivElement>(null)
   const descriptionRef = useRef<HTMLDivElement>(null)
   const lectureListRef = useRef<HTMLDivElement>(null)
 
-  // 데이터는 실제로는 API를 통해 받아와야 합니다.
-  const course = exampleCours
+  const result = useQueries([
+    {
+      queryKey: ['course', id],
+      queryFn: () => getCourse({ courseId: id }),
+    },
+    {
+      queryKey: ['course-taechers'],
+      queryFn: () => getCourseTeacher({ courseId: id }),
+    },
+  ])
+
+  const course = result[0].data?.body
+  const teacher = result[1].data?.body
 
   const handlePurchase = () => {
-    console.log(`Purchase course: ${course.id}`)
+    console.log(`Purchase course: ${course?.id}`)
   }
 
   const scrollIntos = useMemo(
@@ -104,18 +88,8 @@ function CourseDetailPage() {
           }}
         >
           <Box sx={{ marginRight: 16 }}>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 'bold',
-                color: '#FF5252',
-                marginBottom: 4,
-              }}
-            >
-              BEST
-            </Typography>
             <Stack direction="row" spacing={1} sx={{ marginBottom: 4 }}>
-              {course.tags.map((tag, index) => (
+              {course?.tags.map((tag, index) => (
                 <Chip key={index} label={tag} variant="outlined" />
               ))}
             </Stack>
@@ -123,21 +97,17 @@ function CourseDetailPage() {
               variant="h5"
               sx={{ fontWeight: 'bold', marginBottom: 4 }}
             >
-              (2025) 일주일만에 합격하는 정보처리기사 실기
+              {course?.title}
             </Typography>
             <Typography variant="subtitle1" sx={{ marginTop: 4 }}>
-              정보처리기사 실기, 단번에 합격! 코드와 이론, 핵심만 콕 집어
-              알려드립니다. 기출문제 완벽 정복! 체계적인 강의로 합격의 문을
-              여세요.
+              {course?.subTitle}
             </Typography>
           </Box>
           {/* Image Section */}
           <Box
             component="img"
-            src={
-              'https://www.investopedia.com/thmb/ckPwC5ARwco1nOSCKVGE57se8MI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1245748917-99e3329a7b8147e8ab648806220ce153.jpg'
-            }
-            alt={course.title || 'thumbnail'}
+            src={course?.thumbnailImageUrls[0]}
+            alt={course?.title || 'thumbnail'}
             width={300}
             height={200}
             sx={{
@@ -153,7 +123,7 @@ function CourseDetailPage() {
             sx={{ fontSize: 30, marginRight: 1, color: '#A0A0A0' }}
           />
           <Typography sx={{ fontSize: 18, fontWeight: 'bold' }}>
-            주말코딩
+            {teacher?.name}
           </Typography>
           <EmojiEventsIcon
             sx={{
@@ -187,7 +157,7 @@ function CourseDetailPage() {
 
         {/* Tags Section */}
         <Stack direction="row" spacing={1} sx={{ marginBottom: 4 }}>
-          {course.tags.map((tag, index) => (
+          {course?.tags.map((tag, index) => (
             <Chip key={index} label={tag} variant="outlined" />
           ))}
         </Stack>
@@ -222,7 +192,7 @@ function CourseDetailPage() {
         color="textSecondary"
         sx={{ marginBottom: 4 }}
       >
-        생성일: {course.createdAt} | 업데이트일: {course.updatedAt}
+        생성일: {course?.createdAt} | 업데이트일: {course?.updatedAt}
       </Typography>
 
       <ScrollIntoButtonGroup scrollIntos={scrollIntos} />
@@ -240,25 +210,25 @@ function CourseDetailPage() {
         <Box>
           <Typography variant="body1">전체 수강생 수</Typography>
           <Typography variant="h6">
-            {course.courseStatistics &&
-              course.courseStatistics.studentStatistics.totalStudents}
-            명
+            {/* {course.courseStatistics &&
+              course.courseStatistics.studentStatistics.totalStudents} */}
+            0명
           </Typography>
         </Box>
         <Box>
           <Typography variant="body1">활성 수강생 수</Typography>
           <Typography variant="h6">
-            {course.courseStatistics &&
-              course.courseStatistics.studentStatistics.activeStudents}
-            명
+            {/* {course.courseStatistics &&
+              course.courseStatistics.studentStatistics.activeStudents} */}
+            0명
           </Typography>
         </Box>
         <Box>
           <Typography variant="body1">완료한 수강생 수</Typography>
           <Typography variant="h6">
-            {course.courseStatistics &&
-              course.courseStatistics.studentStatistics.completedStudents}
-            명
+            {/* {course.courseStatistics &&
+              course.courseStatistics.studentStatistics.completedStudents} */}
+            0명
           </Typography>
         </Box>
       </Stack>
@@ -276,27 +246,27 @@ function CourseDetailPage() {
         <Box>
           <Typography variant="body1">전체 렉처 수</Typography>
           <Typography variant="h6">
-            {course.courseStatistics &&
-              course.courseStatistics.lectureStatistics.totalLectures}
-            개
+            {/* {course.courseStatistics &&
+              course.courseStatistics.lectureStatistics.totalLectures} */}
+            0개
           </Typography>
         </Box>
         <Box>
           <Typography variant="body1">총 강좌 시간</Typography>
           <Typography variant="h6">
-            {course.courseStatistics &&
+            {/* {course.courseStatistics &&
               (
                 course.courseStatistics.lectureStatistics.totalDuration / 60
-              ).toFixed(1)}
-            시간
+              ).toFixed(1)} */}
+            0시간
           </Typography>
         </Box>
         <Box>
           <Typography variant="body1">평균 강좌 시간</Typography>
           <Typography variant="h6">
-            {course.courseStatistics &&
-              course.courseStatistics.lectureStatistics.averageDuration}
-            분
+            {/* {course.courseStatistics &&
+              course.courseStatistics.lectureStatistics.averageDuration} */}
+            0분
           </Typography>
         </Box>
       </Stack>
@@ -310,7 +280,7 @@ function CourseDetailPage() {
         설명
       </Typography>
 
-      <MUIMarkdown markdown="" />
+      <MUIMarkdown markdown={course?.descriptionWithMarkdown ?? ''} />
       <Divider sx={{ marginY: '32px' }} />
 
       <LectureList ref={lectureListRef} />

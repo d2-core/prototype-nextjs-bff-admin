@@ -4,7 +4,7 @@ import AddTag from '../shared/AddTag'
 import SelectMenu from '../shared/SelectMenu'
 import MultipleImageUpload from '../shared/MultipleImageUpload'
 import { isInt } from 'validator'
-import useCours from './hook/useCours'
+import useCoursForm from './hook/useCoursForm'
 import MUIMarkdown from '../shared/MUIMarkdown'
 import { useStaticsContext } from '@/contexts/StaticsContext'
 
@@ -20,7 +20,6 @@ function CoursForm({ id }: Props) {
     useStaticsContext()
 
   const {
-    defaultValues,
     register,
     watch,
     errors,
@@ -29,7 +28,7 @@ function CoursForm({ id }: Props) {
     imagesUpload,
     handleDescriptionAdd,
     handleSubmit,
-  } = useCours(id)
+  } = useCoursForm(id)
 
   console.log(watch())
 
@@ -47,7 +46,10 @@ function CoursForm({ id }: Props) {
         }
       />
       <Box css={formContainerStyle}>
-        <MultipleImageUpload upload={imagesUpload} />
+        <MultipleImageUpload
+          upload={imagesUpload}
+          value={watch('thumbnailImageFiles')}
+        />
         {errors.thumbnailImageFiles && (
           <Typography
             color={'red'}
@@ -60,10 +62,11 @@ function CoursForm({ id }: Props) {
         <SelectMenu
           title="카테고리"
           memuArr={courseCategories.map((item) => ({
-            id: item.id,
+            id: String(item.id),
             name: item.name ?? '',
           }))}
           sx={{ margin: '32px 0' }}
+          value={String(watch('courseCategoryId'))}
           register={{
             ...register('courseCategoryId'),
           }}
@@ -76,6 +79,7 @@ function CoursForm({ id }: Props) {
           sx={{ marginBottom: '32px' }}
           error={!!errors.title}
           helperText={errors.title?.message}
+          value={watch('title')}
           {...register('title', {
             required: '제목을 입력해주세요',
             minLength: {
@@ -92,6 +96,7 @@ function CoursForm({ id }: Props) {
           sx={{ marginBottom: '32px' }}
           error={!!errors.subTitle}
           helperText={errors.subTitle?.message}
+          value={watch('subTitle')}
           {...register('subTitle', {
             required: '부제을 입력해주세요',
             minLength: {
@@ -127,10 +132,11 @@ function CoursForm({ id }: Props) {
         <SelectMenu
           title="레벨"
           memuArr={courseLevels.map((item) => ({
-            id: item.id,
+            id: String(item.id),
             name: item.name ?? '',
           }))}
           sx={{ marginBottom: '32px' }}
+          value={String(watch('courseLevelId'))}
           register={{
             ...register('courseLevelId'),
           }}
@@ -138,6 +144,7 @@ function CoursForm({ id }: Props) {
 
         <AddTag
           suggestions={coursRecommedTags.map((tag) => tag?.name ?? '')}
+          value={watch('tags')}
           onAddTag={onAddTag}
         />
 
@@ -148,6 +155,7 @@ function CoursForm({ id }: Props) {
           sx={{ marginBottom: '32px' }}
           error={!!errors.price}
           helperText={errors.price?.message}
+          value={watch('price')}
           {...register('price', {
             required: '가격을 입력해주세요',
             validate: (value) =>
