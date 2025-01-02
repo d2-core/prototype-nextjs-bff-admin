@@ -56,5 +56,21 @@ export function useStaticsContext() {
     throw new Error('StaticsContext 내부에서 사용해야 합니다.')
   }
 
-  return values
+  const getCourseCategory = (
+    courseCategoryId: number,
+  ): CourseCategory | undefined => {
+    return values.courseCategories.find(
+      (category) => category.id === courseCategoryId,
+    )
+  }
+
+  const getCourseLevel = (courseLevelId: number): CourseLevel | undefined => {
+    return values.courseLevels.find((level) => level.id === courseLevelId)
+  }
+
+  return {
+    getCourseCategory,
+    getCourseLevel,
+    ...values,
+  }
 }
