@@ -1,3 +1,5 @@
+import { FileForm } from './image'
+
 export const adminUserRoleMap = {
   MANAGER: 'MANAGER',
   TEACHER: 'TEACHER',
@@ -38,7 +40,7 @@ export const coursCategoryMap = {
 export type CoursCategory = keyof typeof coursCategoryMap
 
 export interface CoursForm {
-  thumbnailImageFiles: File[]
+  thumbnailImageFiles: FileForm[]
   courseCategoryId: number
   title: string
   subTitle: string
