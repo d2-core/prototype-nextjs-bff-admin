@@ -21,29 +21,32 @@ import {
   useState,
   useEffect,
 } from 'react'
-
-interface ImageItem {
-  file: File
-  previewURL: string
-}
+import { FileForm } from '@/models/image'
 
 interface FormValues {
-  images: ImageItem[]
+  images: FileForm[]
 }
 
 interface Props extends BoxProps {
-  upload: (files: File[]) => void
+  upload: (files: FileForm[]) => void
+  value: FileForm[]
 }
 
-function ImageUpload({ upload, sx, ...rest }: Props) {
+function ImageUpload({ upload, sx, value, ...rest }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const { control, watch } = useForm<FormValues>({
+  const { control, watch, setValue } = useForm<FormValues>({
     defaultValues: {
       images: [],
     },
   })
-  const { fields, append, remove, move, update } = useFieldArray({
+  const {
+    fields,
+    append: rawAppend,
+    remove: rawRemove,
+    move: rawMove,
+    update: rawUpdate,
+  } = useFieldArray({
     control,
     name: 'images',
   })
@@ -53,13 +56,44 @@ function ImageUpload({ upload, sx, ...rest }: Props) {
 
   const [replaceIndex, setReplaceIndex] = useState<number | null>(null)
 
+  const append = useCallback(
+    (...args: Parameters<typeof rawAppend>) => {
+      rawAppend(...args)
+      upload(watch('images')) // Call upload after appending
+    },
+    [rawAppend, upload, watch],
+  )
+
+  const remove = useCallback(
+    (...args: Parameters<typeof rawRemove>) => {
+      rawRemove(...args)
+      upload(watch('images')) // Call upload after removing
+    },
+    [rawRemove, upload, watch],
+  )
+
+  const move = useCallback(
+    (...args: Parameters<typeof rawMove>) => {
+      rawMove(...args)
+      upload(watch('images')) // Call upload after moving
+    },
+    [rawMove, upload, watch],
+  )
+
+  const update = useCallback(
+    (...args: Parameters<typeof rawUpdate>) => {
+      rawUpdate(...args)
+      upload(watch('images')) // Call upload after updating
+    },
+    [rawUpdate, upload, watch],
+  )
+
   const addFilesToList = useCallback(
     (files: FileList) => {
       Array.from(files).forEach((file) => {
-        const previewURL = URL.createObjectURL(file)
-        append({ file, previewURL })
+        const previewUrl = URL.createObjectURL(file)
+        append({ file, url: previewUrl })
       })
-      upload(currentImages.map((image) => image.file))
     },
     [append],
   )
@@ -67,10 +101,10 @@ function ImageUpload({ upload, sx, ...rest }: Props) {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0]
-      const previewURL = URL.createObjectURL(file)
+      const previewUrl = URL.createObjectURL(file)
 
       if (replaceIndex !== null) {
-        update(replaceIndex, { file, previewURL })
+        update(replaceIndex, { file, url: previewUrl })
         setReplaceIndex(null)
       } else {
         addFilesToList(e.target.files)
@@ -136,8 +170,8 @@ function ImageUpload({ upload, sx, ...rest }: Props) {
   }
 
   useEffect(() => {
-    upload(currentImages.map((image) => image.file))
-  }, [currentImages])
+    setValue('images', value)
+  }, [value, setValue])
 
   return (
     <Box sx={sx} {...rest}>
@@ -172,7 +206,7 @@ function ImageUpload({ upload, sx, ...rest }: Props) {
             >
               <CardMedia
                 component="img"
-                src={currentImages[idx]?.previewURL}
+                src={currentImages[idx]?.url}
                 sx={{
                   width: '100%',
                   height: '100%',
