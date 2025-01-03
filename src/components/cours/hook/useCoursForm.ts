@@ -1,3 +1,4 @@
+import { useTeacherContext } from '@/contexts/TeacherContext'
 import { useMarkdownPreviewContext } from '@/contexts/MarkdownPreviewContext'
 import { CoursForm } from '@/models/form'
 import { FileForm } from '@/models/image'
@@ -8,6 +9,7 @@ import { useForm } from 'react-hook-form'
 import { useMutation, useQuery } from 'react-query'
 
 const defaultValues: CoursForm = {
+  teacherId: 0,
   thumbnailImageFiles: [],
   courseCategoryId: 0,
   title: '',
@@ -20,6 +22,7 @@ const defaultValues: CoursForm = {
 
 function useCoursForm(id?: number) {
   const route = useRouter()
+  const { teacher } = useTeacherContext()
   const { open } = useMarkdownPreviewContext()
   const {
     reset,
@@ -98,6 +101,10 @@ function useCoursForm(id?: number) {
   }, [watch('descriptionWithMarkdown')])
 
   const hasSubmit = Object.keys(errors).length === 0
+
+  useEffect(() => {
+    setValue('teacherId', teacher?.id ?? 0)
+  }, [teacher])
 
   useEffect(() => {
     if (isSuccess && course) {

@@ -132,6 +132,7 @@ export async function publishCourse(body: {
 
 function createCourseFormData(courseForm: CoursForm): FormData {
   const formData = new FormData()
+  formData.append(`teacherId`, `${courseForm.teacherId}`)
   courseForm.thumbnailImageFiles.forEach((fileForm, index) => {
     fileForm.file != null &&
       formData.append(`thumbnailImageFiles[${index}].file`, fileForm.file)

@@ -40,6 +40,7 @@ export const coursCategoryMap = {
 export type CoursCategory = keyof typeof coursCategoryMap
 
 export interface CoursForm {
+  teacherId: number
   thumbnailImageFiles: FileForm[]
   courseCategoryId: number
   title: string
