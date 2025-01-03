@@ -10,6 +10,7 @@ import UserInit from '@/components/shared/UserInit'
 import withAuthGuard from '@/components/shared/hocs/withAuthGuard'
 import { MarkdownPreviewContextProvider } from '@/contexts/MarkdownPreviewContext'
 import { StaticsContextProvider } from '@/contexts/StaticsContext'
+import { TeacherContextProvider } from '@/contexts/TeacherContext'
 
 const client = new QueryClient({
   defaultOptions: {
@@ -36,7 +37,9 @@ function App({
                 <ApiInit>
                   <StaticsContextProvider>
                     <UserInit>
-                      <AuthGaurdComponent {...pageProps} />
+                      <TeacherContextProvider>
+                        <AuthGaurdComponent {...pageProps} />
+                      </TeacherContextProvider>
                     </UserInit>
                   </StaticsContextProvider>
                 </ApiInit>
