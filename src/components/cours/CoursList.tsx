@@ -6,15 +6,17 @@ import ListEmpty from '../shared/ListEmpty'
 import { useQuery } from 'react-query'
 import { getCourseList } from '@/remote/api/course'
 import { useStaticsContext } from '@/contexts/StaticsContext'
+import { useTeacherContext } from '../../contexts/TeacherContext'
+import { getTeacherCourseList } from '@/remote/api/teacher'
 
 function CoursList() {
   const { getCourseCategory, getCourseLevel } = useStaticsContext()
   const router = useRouter()
-  const { data } = useQuery(['course-list'], getCourseList)
+  const { teacher } = useTeacherContext()
+  const { data } = useQuery(['course-list', teacher?.id], () =>
+    getTeacherCourseList({ teacherId: teacher?.id ?? 0 }),
+  )
   const courses = data?.body ?? []
-
-  console.log(courses)
-
   const handleDetail = (id: number) => {
     router.push(`/workspace/cours/${id}`)
   }
